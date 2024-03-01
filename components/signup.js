@@ -1,44 +1,48 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, TextInput, Platform, Keyboard, TouchableWithoutFeedback, Image } from "react-native";
-import Register from "./components/signup";
-import Login from "./components/login";
-import Home from "./components/home";
-import Loader from "./components/loader";
-import Content from "./components/content";
-import { StatusBar } from "expo-status-bar";
+import CustomTextInput from './textInput'
 
-const App = () => {
+const Register = () => {
 
-  const [page, setPage] = useState("home")
 
-  const onPageUpdateClick = (pageName) => {
-    setPage(pageName)
-    if(pageName === "loader"){
-      setTimeout(() => {
-        setPage("content")
-      }, 3200) 
-    }
-  } 
+  function onLoginClick(){
+  }
+
 
   return (
-    <View style = {{flex:1}}>
-    <StatusBar style={"light"} />
-      <TouchableWithoutFeedback onPress={function (){
-        Keyboard.dismiss()
-      }}>
-        <View>
-        {page === "signup" && <Register onChange = {onPageUpdateClick}/>}
-        {page === "login" && <Login onChange = {onPageUpdateClick}/>}
-        {page === "home" && <Home onChange = {onPageUpdateClick} />}
-        {page === "loader" && <Loader/>}
-        {page === "content" && <Content />}
+    <View style={[styles.container]}>
+        <View style = {styles.titleContainer}>
+            <Text style = {styles.title}>Create Account</Text>
+            <Text style = {styles.subTitle}>Create an account so you can explore all the existing jobs</Text>
         </View>
-      </TouchableWithoutFeedback>
-    </View>
+
+        <CustomTextInput  placeholder = "Username" />
+        <CustomTextInput placeholder = "Password" />
+        <CustomTextInput placeholder = "Email" />
+    
+      
+        <TouchableOpacity onPress={onLoginClick} style={styles.loginBtn}>
+          <Text style = {styles.loginText}>SignUp</Text>
+        </TouchableOpacity>
+
+        <Text style = {styles.orCw}>Or continue with</Text>
+
+        <View style = {styles.iconContainer}>
+            <View style = {styles.iconCard}>
+                <Image source={require("../assets/google.png")} />
+            </View>
+            <View style = {styles.iconCard}>
+            <Image source={require("../assets/facebook.png")} />
+            </View>
+            <View style = {styles.iconCard}>
+            <Image source={require("../assets/apple.png")} />
+            </View>
+        </View>
+      </View>
   );
 };
 
-export default App;
+export default Register;
 
 const styles = StyleSheet.create({
   iconContainer:{
@@ -113,5 +117,3 @@ const styles = StyleSheet.create({
     paddingLeft:20
   }
 });
-
-

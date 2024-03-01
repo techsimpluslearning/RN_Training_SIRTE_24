@@ -1,47 +1,44 @@
 import { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, TextInput, Platform, Keyboard, TouchableWithoutFeedback, Image } from "react-native";
-import Register from "./components/signup";
-import Login from "./components/login";
-import Home from "./components/home";
-import Loader from "./components/loader";
-import Content from "./components/content";
-import { StatusBar } from "expo-status-bar";
 
-const App = () => {
 
-  const [page, setPage] = useState("home")
-
-  const onPageUpdateClick = (pageName) => {
-    setPage(pageName)
-    if(pageName === "loader"){
-      setTimeout(() => {
-        setPage("content")
-      }, 3200) 
-    }
-  } 
+const Home = (data) => {
 
   return (
-    <View style = {{flex:1}}>
-    <StatusBar style={"light"} />
-      <TouchableWithoutFeedback onPress={function (){
-        Keyboard.dismiss()
-      }}>
-        <View>
-        {page === "signup" && <Register onChange = {onPageUpdateClick}/>}
-        {page === "login" && <Login onChange = {onPageUpdateClick}/>}
-        {page === "home" && <Home onChange = {onPageUpdateClick} />}
-        {page === "loader" && <Loader/>}
-        {page === "content" && <Content />}
+    <View style={[styles.container]}>
+
+        <View style = {styles.imageContainer}>
+            <Image source={require("../assets/home.png")} />
         </View>
-      </TouchableWithoutFeedback>
-    </View>
+
+        <View style = {styles.titleContainer}>
+            <Text style = {styles.title}>Create Account</Text>
+            
+            <Text style = {styles.subTitle}>Create an account so you can explore all the existing jobs</Text>
+        </View>
+
+      
+        <View style = {styles.btnContainer}>
+            <TouchableOpacity onPress={() => data.onChange("login")} style={styles.loginBtn}>
+                <Text style = {styles.loginText}>Login Now</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => data.onChange("signup")} style={[styles.loginBtn, {backgroundColor:"white"}]}>
+                <Text style = {[styles.loginText, {color:"black"}]}>Register</Text>
+            </TouchableOpacity>
+        </View>
+      </View>
   );
 };
 
-export default App;
+export default Home;
 
 const styles = StyleSheet.create({
   iconContainer:{
+    flexDirection:"row",
+    gap:10
+  },
+
+  btnContainer:{
     flexDirection:"row",
     gap:10
   },
@@ -63,7 +60,7 @@ const styles = StyleSheet.create({
   },
 
   titleContainer:{
-    marginTop:97,
+    marginTop:17,
     alignItems:"center",
   },
 
@@ -82,7 +79,7 @@ const styles = StyleSheet.create({
 
   loginText: {
     color: "#fff",
-    fontSize:30,
+    fontSize:22,
     fontWeight:"700"
   },
   container: {
@@ -92,7 +89,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   loginBtn:{
-    width:"70%",
+    width:130,
     backgroundColor:"darkblue",
     height:60,
     borderRadius:10,
@@ -113,5 +110,3 @@ const styles = StyleSheet.create({
     paddingLeft:20
   }
 });
-
-
